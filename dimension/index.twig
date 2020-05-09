@@ -7,6 +7,11 @@
 		<link rel="stylesheet" href="{{ theme_url }}/assets/css/main.css" />
 		<!--[if lte IE 9]><link rel="stylesheet" href="{{ theme_url }}/assets/css/ie9.css" /><![endif]-->
 		<noscript><link rel="stylesheet" href="{{ theme_url }}/assets/css/noscript.css" /></noscript>
+		<style>
+			#bg:after {
+				background-image: url("{{ assets_url }}/bg.jpg");
+			}
+		</style>
 	</head>
 	<body>
 
@@ -26,27 +31,23 @@
 						</div>
 						<nav>
 							<ul>
-							{% for page in pages|sort_by([ 'meta', 'nav' ]) %}
-								{% if page.meta.template == "single" %}
+							{% for page in pages|sort_by([ 'meta', 'nav' ]) if page.title and not page.hidden and page.meta.template == "single" %}
 								<li><a href="#{{ page.id }}">{{ page.title }}</a></li>
-								{% endif %}
 							{% endfor %}
-								<li><a href="#contact">Contact</a></li>
+								<!-- <li><a href="#contact">Contact</a></li> -->
 							</ul>
 						</nav>
 					</header>
 
 				<!-- Main -->
 					<div id="main">
-					{% for page in pages|sort_by([ 'meta', 'nav' ]) %}
-						{% if page.meta.template == "single" %}
+					{% for page in pages|sort_by([ 'meta', 'nav' ]) if page.meta.template == "single" %}
 						<!-- Intro -->
 							<article id="{{ page.id }}">
 								<h2 class="major">{{ page.title }}</h2>
 								<span class="image main"><img src="{{ page.meta.image }}" alt="{{ page.title }}" /></span>
 								<p>{{ page.id|content }}</p>
 							</article>
-						{% endif %}
 					{% endfor %}
 
 						<!-- Contact -->
@@ -81,7 +82,7 @@
 
 				<!-- Footer -->
 					<footer id="footer">
-						<p class="copyright">&copy; {{ site_title }}. Design: <a href="https://html5up.net">HTML5 UP</a> | Powered By: <a href="https://besrourms.github.io">Mohamed Safouan Besrour</a></p>
+						<p class="copyright">{{ meta.footer }}</p>
 					</footer>
 
 			</div>
